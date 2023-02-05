@@ -67,38 +67,24 @@ async def on_message(message):
         author_name = get_author_name(message.author)
         author_sex = get_author_sex(author_name)
         msg = message.content.replace('<@955543907213660240>', '')
-
+        # paint + opinion
         if '!нарисуй' in message.content:
           msg = msg.replace('!нарисуй', '')
           pic_url = await create_pic_DALLE(msg)
           answer = await opinion_chat_GPT(msg, author_name, author_sex)
           await message.channel.send(content=pic_url)
           await message.channel.send(answer)
+        # opinion
         else:
           answer = await ask_chat_GPT(msg, author_name, author_sex)
           await message.channel.send(message.author.mention + answer)
 
-    # testing
+    # paint picture
     elif message.content.startswith('!нарисуй'):
       async with message.channel.typing():
         prompt = message.content.replace('!нарисуй', '')
         pic_url = await create_pic_DALLE(prompt)
         await message.channel.send(content=pic_url)
-
-
-    # # аниме
-    # elif anime_trigger(message):
-    #   print('got anime_trigger...')
-    #   async with message.channel.typing():
-    #     sleep(4)
-    #     await message.channel.send(random.choice(words_for_anime))
-
-    # # grim
-    # elif message.content.startswith('!grim'):
-    #   print('got grim_trigger...')
-    #   async with message.channel.typing():
-    #     answer = await grim_phrase_GPT()
-    #     await message.channel.send(answer)
 
     #ответы на глупый_бот    
     elif any(word in message.content for word in abuse_triggers):
@@ -112,28 +98,10 @@ async def on_message(message):
         sleep(3)
         await message.channel.send(f'{message.author.mention}, никто тебе не поможет')
         
-    # #грустные ответы
-    # elif any(word in message.content for word in sad_words):
-    #   async with message.channel.typing():
-    #     sleep(4)
-    #     await message.channel.send(random.choice(depressing_phrases))
-        
     #упоминание имени тени
     elif any(word in message.content for word in shadow_triggers):
       sleep(1)
       await message.channel.send(' :middle_finger: ')
-      
-    # #ответы почему 
-    # elif any(word in message.content for word in why_words):
-    #   async with message.channel.typing():
-    #     sleep(4)
-    #     await message.channel.send(random.choice(why_answers))
-        
-    # #странные фразы
-    # elif grim_trigger(message):
-    #   async with message.channel.typing():
-    #     sleep(5)
-    #     await message.channel.send(random.choice(mad_phrases))
 
-      
+
 client.run(DISCORD_TOKEN)
