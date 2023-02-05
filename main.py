@@ -6,6 +6,7 @@ from triggers import *
 from phrases import *
 from services.utils import *
 from services.chat_GPT import *
+from datetime import datetime
 
 
 DISCORD_TOKEN = config('DISCORD_TOKEN')
@@ -64,12 +65,27 @@ async def on_message(message):
     # обращения к боту
     elif client.user.mentioned_in(message):
       async with message.channel.typing():
-        msg = message.content.replace('<@955543907213660240>', '')
         author_name = get_author_name(message.author)
         author_sex = get_author_sex(author_name)
-        answer = await ask_chat_GPT(msg, author_name, author_sex)
-        print('answer: ', answer)
-        await message.channel.send(message.author.mention + answer)
+        msg = message.content.replace('<@955543907213660240>', '')
+
+        if '!нарисуй' in message.content:
+          msg = msg.replace('!нарисуй', '')
+          pic_url = await create_pic_DALLE(msg)
+          answer = await opinion_chat_GPT(msg, author_name, author_sex)
+          await message.channel.send(content=pic_url)
+          await message.channel.send(answer)
+        else:
+          answer = await ask_chat_GPT(msg, author_name, author_sex)
+          await message.channel.send(message.author.mention + answer)
+
+    # testing
+    elif message.content.startswith('!нарисуй'):
+      async with message.channel.typing():
+        prompt = message.content.replace('!нарисуй', '')
+        pic_url = await create_pic_DALLE(prompt)
+        await message.channel.send(content=pic_url)
+
 
     # # аниме
     # elif anime_trigger(message):
