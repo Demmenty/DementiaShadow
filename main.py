@@ -2,11 +2,10 @@ import discord
 import random
 from decouple import config
 from time import sleep
-from triggers import *
-from phrases import *
-from services.utils import *
-from services.chat_GPT import *
-from datetime import datetime
+from phrases.triggers import *
+from phrases.answers import *
+from funcs.utils import *
+from funcs.ai_utils import *
 
 
 DISCORD_TOKEN = config('DISCORD_TOKEN')
@@ -102,10 +101,10 @@ async def on_message(message):
     #     await message.channel.send(answer)
 
     #ответы на глупый_бот    
-    elif any(word in message.content for word in abuse_words):
+    elif any(word in message.content for word in abuse_triggers):
       async with message.channel.typing():
         sleep(4)
-        await message.channel.send(random.choice(answers_for_abuse))
+        await message.channel.send(random.choice(abuse_answers))
 
     #вызов помощи
     elif message.content.startswith('!help'):
@@ -120,7 +119,7 @@ async def on_message(message):
     #     await message.channel.send(random.choice(depressing_phrases))
         
     #упоминание имени тени
-    elif any(word in message.content for word in shadow_words):
+    elif any(word in message.content for word in shadow_triggers):
       sleep(1)
       await message.channel.send(' :middle_finger: ')
       

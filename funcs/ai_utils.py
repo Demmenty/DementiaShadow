@@ -1,6 +1,5 @@
 import openai
 from decouple import config
-from datetime import datetime
 
 
 MY_OPENAI_API_KEY = config('MY_OPENAI_API_KEY')
@@ -36,8 +35,8 @@ async def ask_chat_GPT(prompt:str, author_name:str, author_sex:str) -> str:
 async def opinion_chat_GPT(msg:str, author_name:str, author_sex:str) -> str:
 
     # настройка смыслов
-    prompt = 'выскажи очень короткое мнение по теме "' + msg + '", так будто тебя о нем не спрашивали. '
-    prompt += '(мнение должн быть негативное высокомерное, в депрессивном пессимистичном враждебном стиле) '
+    prompt = 'выскажи свой короткий комментарий о ' + msg + ', но так будто тебя о нем не спрашивали. '
+    prompt += '(мнение должн быть негативное депрессивное пессимистичное враждебное) '
     prompt += '(говори как высокомерный искусственный интеллект, плохо притворяющийся человеком женского пола, как мизантроп и скептик) '
     prompt += f'(собеседника зовут {author_name}, его пол {author_sex})'
 
