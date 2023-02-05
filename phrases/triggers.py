@@ -20,14 +20,13 @@ def anime_trigger(message):
 
 def grim_trigger(message):
 
-    trigger_words = ['реал', 'ебат']
+    trigger_words = ['реал', 'ебат', 'груст', 'пиздец', 'пздц', 'хрен']
 
     if any(word in message.content for word in trigger_words):
         
         return True
 
 
-sad_triggers = ['грустно', 'пиздец', 'пздц', 'хреново']
 shadow_triggers = ['@Тень Деменции', 'Тень', 'Тень Деменции',
                 'Тень демменции', 'тень демменции', 'тень Деменции',
                 'тень деменции','Тень деменции']

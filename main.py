@@ -103,5 +103,12 @@ async def on_message(message):
       sleep(1)
       await message.channel.send(' :middle_finger: ')
 
+    # случайные мрачные фразы
+    elif grim_trigger(message):
+      async with message.channel.typing():
+        sleep(3)
+        answer = await grim_phrase_GPT()
+        await message.channel.send(answer)
+
 
 client.run(DISCORD_TOKEN)

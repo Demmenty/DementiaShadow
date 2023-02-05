@@ -126,11 +126,11 @@ async def grim_phrase_GPT():
     prompt = 'скажи что-нибудь депрессивное безнадежное пугающее мрачное, вызывающее экзистенциальный ужас, два предложения максимум'
 
     # генерируем ответ
-    completion = openai.Completion.create(
+    completion = await openai.Completion.acreate(
         engine=model_engine,
         prompt=prompt,
         max_tokens=1024,
-        temperature=0.9,
+        temperature=0.5,
         frequency_penalty=0,
         presence_penalty=0
     )
